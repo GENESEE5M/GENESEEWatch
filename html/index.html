@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.5.6/dist/progressbar.js"></script>
+    <script src="https://kit.fontawesome.com/57e361edfe.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script src="js/watch.js"></script>
+    <script src="js/moviment.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+    <div id="watch">
+        <div id="glass" style="pointer-events:none;"></div>
+
+        <button class="time" onclick="time()">
+            22<br>00
+        </button>
+
+        <div id="content">
+
+            <div id="activity">
+                <div id="backanimated"></div>
+
+                <div id="title">Atividades</div>
+                <div class="timev2">12:00</div>
+
+                <div id="life"></div>
+                <div id="hunger"></div>
+                <div id="thirst"></div>
+
+                <div id="dots1" style="background: rgba(196, 196, 196);"></div>
+            </div>
+
+            <div id="passaport">
+                <div id="backanimated"></div>
+
+                <div id="title">Meus Dados</div>
+                <div class="timev2">12:00</div>
+
+                <ul>
+                    <li class="passaport" id="li1"><i class="fas fa-user"></i> Doug Junnior</li>
+                    <li class="passaport" id="li2"><i class="fas fa-id-card-alt"></i> ID: 1</li>
+                    <li class="passaport" id="li3"><i class="far fa-id-card"></i> AAABBBC</li>
+                    <li class="passaport" id="li4"><i class="fas fa-briefcase"></i> Desempregado</li>
+                    <li class="passaport" id="li5"><i class="fas fa-car"></i> Não Habilitado</li>
+                    <li class="passaport" id="li6"><i class="fas fa-mobile-alt"></i> 111-222</li>
+                </ul>
+
+                <div id="dots2" style="background: rgba(196, 196, 196);"></div>
+            </div>
+
+            <div id="music">
+                <div id="backanimated"></div>
+
+                <div id="title">Music</div>
+                <div class="timev2">12:00</div>
+
+                <button class="player" onclick="player()"><i class="fas fa-play"></i></button>
+                <button class="stop" onclick="pause()" ondblclick="stopMusic()"><i class="fas fa-pause"></i></button>
+
+                <div class="navplayer">
+                    <div class="less" onclick="less()"><b>-</b></div>
+                    <div id="timeplay" onclick="timeplay()">0:00 / 0:00</div>
+                    <div class="plus" onclick="plus()"><b>+</b></div>
+                </div>
+
+                <div id="dots3" style="background: rgba(196, 196, 196);"></div>
+            </div>
+
+            <div id="gps">
+                <div id="backanimated"></div>
+
+                <div id="title">GPS</div>
+                <div class="timev2">12:00</div>
+
+                <div id="map"></div>
+                <div id="iconmap"><i class="fas fa-map-marker-alt"></i></div>
+
+                <div class="gps" onclick="gpsshow()">
+                    <div id="text">ACESSAR</div>
+                </div>
+
+                <div id="dots4" style="background: rgba(196, 196, 196);"></div>
+            </div>
+
+            <div id="settings">
+                <div id="backanimated"></div>
+
+                <div id="title">Config</div>
+                <div class="timev2">12:00</div>
+
+                <ul>
+                    <li class="menu" onclick="notify()"><i class="fas fa-allergies"></i> Notificação</li>
+                    <li class="menu" onclick="changecase()"><i class="fas fa-allergies"></i> Capa</li>
+                </ul>
+
+                <div id="dots5" style="background: rgba(196, 196, 196);"></div>
+            </div>
+
+            <div id="dots">
+                <div id="dots1" onclick="activity()"></div>
+                <div id="dots2" onclick="passaport()"></div>
+                <div id="dots3" onclick="music()"></div>
+                <div id="dots4" onclick="gps()"></div>
+                <div id="dots5" onclick="settings()"></div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
