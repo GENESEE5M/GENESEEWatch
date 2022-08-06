@@ -6,7 +6,7 @@ Config = {}
 Config.Command = true -- Ativa ou desativa o watch por comandos
 Config.CommandControl = "watch" -- Comando utilizado
 
-Config.Bind = false -- Ativa ou desativa o watch por bind 
+Config.Bind = true -- Ativa ou desativa o watch por bind 
 Config.BindControl = 10 -- Para saber o botão ideal siga as documentações em https://docs.fivem.net/docs/game-references/controls/
 
 ------------------------------------------------------------------
@@ -39,3 +39,4 @@ Config.MiniMapDuration = 10000 -- Tempo que o minimap ficara visivel
 ------------------------------------------------------------------
 Config.Focus = true -- Ativa ou desativa o movimento do player
 Config.Cursor = true -- Ativa ou desativa o cursor do mouse
+Config.ApiYoutube = "" -- É preciso colocar API do youtube aqui.

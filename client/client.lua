@@ -22,6 +22,21 @@ xSound = exports.xsound
 
 local musicID = "name"
 
+local ped = 0
+local life = 0
+
+Citizen.CreateThread(function()
+
+    while true do
+
+        ped = PlayerPedId()
+        life = (GetEntityHealth(ped) - 100) / 300 * 100
+
+        Citizen.Wait(500)
+    end
+
+end)
+
 RegisterNUICallback("action", function(data)
     local source = source
     local pos = GetEntityCoords(PlayerPedId())
@@ -29,13 +44,13 @@ RegisterNUICallback("action", function(data)
     if data.action == "play" then
         if Watch.CheckPermission() then
             if xSound:soundExists(musicID) then
+                xSound:Destroy(musicID)
+                xSound:PlayUrl(musicID, data.link, 0.1, 0)
                 if xSound:isPaused(musicID) then
                     xSound:Resume(musicID)
                 end
             else
-                local name, link = Watch.listMusic()
-
-                xSound:PlayUrl(musicID, link, 0.1, 0)
+                xSound:PlayUrl(musicID, data.link, 0.1, 0)
             end
         end
     elseif data.action == "pause" then
@@ -68,7 +83,9 @@ RegisterNUICallback("action", function(data)
         end
     elseif data.action == "volume+" then
         if Watch.CheckPermission() then
+    
             if xSound:soundExists(musicID) then
+  
                 if xSound:isPlaying(musicID) then
                     xSound:setVolume(musicID, 0.1)
                 end
@@ -169,11 +186,57 @@ function show()
     end
 end
 
-function WatchOn()
+Citizen.CreateThread(function()
+
+    while true do
+
+        WatchOnUpdate()
+        Citizen.Wait(0)
+    end
+
+end)
+
+function WatchOnUpdate()
     local source = source
 
-    local ped = PlayerPedId()
-    local life = (GetEntityHealth(ped) - 100) / 300 * 100
+
+    calculateTimeDisplay()
+    calculateTimeMusic()
+
+    baseSystem()
+    local name, firsname, user_id, registration, job, cnh, phone = Watch.Identity()
+
+
+    SetNuiFocus(false)
+    if onNui then
+        SetNuiFocus(Config.Focus, Config.Cursor)
+    end
+    SendNUIMessage({
+
+        hour = hour,
+        minute = minute,
+
+        life = life,
+        hunger = hunger,
+        thirst = thirst,
+
+        name = name,
+        firsname = firsname,
+        user_id = user_id,
+        registration = registration,
+        job = job,
+        cnh = cnh,
+        phone = phone,
+
+        total = total,
+        played = played,
+        ApiNumber = Config.ApiYoutube,
+
+    })
+end
+
+function WatchOn()
+    local source = source
 
     calculateTimeDisplay()
     calculateTimeMusic()
@@ -206,8 +269,9 @@ function WatchOn()
 
             total = total,
             played = played,
+            ApiNumber = Config.ApiYoutube,
 
-            vRP._playAnim(true, {{"anim@random@shop_clothes@watches", "idle_d"}}, true)
+            vRP._playAnim(true, { { "anim@random@shop_clothes@watches", "idle_d" } }, true)
 
         })
     else
@@ -232,6 +296,7 @@ function WatchOn()
 
             total = total,
             played = played,
+            ApiNumber = Config.ApiYoutube,
 
             vRP._stopAnim(source, false)
         })

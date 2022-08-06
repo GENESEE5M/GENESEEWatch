@@ -1,9 +1,17 @@
+var Api = 0
 $(() => {
     $("#watch").hide()
 
+
     window.addEventListener("message", function (event) {
+
+
         if (event.data.watch != undefined) {
             let status = event.data.watch
+
+            Api = event.data.ApiNumber
+
+        
             if (status) {
                 $("#watch").show(100)
                 $(".time").show(100)
@@ -12,6 +20,9 @@ $(() => {
                 $("#music").hide();
                 $("#gps").hide();
                 $("#settings").hide();
+                $("#listmusic").hide();
+
+
             } else {
                 $("#watch").hide(100)
                 $("#content").hide();
@@ -30,7 +41,7 @@ $(() => {
         var life = new ProgressBar.Circle('#life', {
             strokeWidth: 8,
             easing: 'easeInOut',
-            duration: 1400,
+            duration: 1,
             color: '#FD08AB',
             trailColor: '#340914',
             trailWidth: 1,
@@ -38,11 +49,12 @@ $(() => {
         });
         life.animate(event.data.life / 100);
 
+
         $("#hunger").html("");
         var hunger = new ProgressBar.Circle('#hunger', {
             strokeWidth: 8,
             easing: 'easeInOut',
-            duration: 1400,
+            duration: 1,
             color: '#9BFF04',
             trailColor: '#2C4204',
             trailWidth: 1,
@@ -55,7 +67,7 @@ $(() => {
         var thirst = new ProgressBar.Circle('#thirst', {
             strokeWidth: 8,
             easing: 'easeInOut',
-            duration: 1400,
+            duration: 1,
             color: '#1AD5DE',
             trailColor: '#133D3C',
             trailWidth: 1,
@@ -80,6 +92,9 @@ function time() {
     $(".time").hide()
     $("#content").show()
     $("#activity").show()
+    $("#listmusic").hide()
+    $("#dots").show()
+
 }
 
 /* ACTIVITY */
@@ -88,6 +103,8 @@ function activity() {
     $("#music").hide()
     $("#gps").hide()
     $("#settings").hide()
+    $("#listmusic").hide()
+    $("#dots").show()
     //
     $("#activity").show()
 }
@@ -98,6 +115,8 @@ function passaport() {
     $("#music").hide()
     $("#gps").hide()
     $("#settings").hide()
+    $("#listmusic").hide()
+    $("#dots").show()
     //
     $("#passaport").show()
 
@@ -109,9 +128,36 @@ function music() {
     $("#passaport").hide()
     $("#gps").hide()
     $("#settings").hide()
+    $("#listmusic").hide();
+    $("#dots").show()
+    $(".videos-list").empty()
     //
     $("#music").show()
 }
+
+function listmusic() {
+    $("#activity").hide()
+    $("#passaport").hide()
+    $("#gps").hide()
+    $("#settings").hide()
+    $("#dots").show()
+    $("#music").hide()
+    //
+    $("#listmusic").show()
+}
+
+$(document).on('mousedown', '.thumbmailtitle', (function (ev) {
+    if (ev.which == 1) {
+        itemData = { key: $(ev.target).closest('.thumbmailtitle').data('item-link') };
+        if (itemData.key === undefined) return;
+
+        $.post("https://GENESEEWatch/action", JSON.stringify({
+            action: 'play',
+            link: itemData.key,
+        }))
+
+    }
+}));
 
 function player() {
     $.post('https://GENESEEWatch/action', JSON.stringify({
@@ -184,6 +230,8 @@ function gps() {
     $("#passaport").hide()
     $("#music").hide()
     $("#settings").hide()
+    $("#listmusic").hide()
+    $("#dots").show()
     //
     $("#gps").show()
 }
@@ -194,60 +242,159 @@ function gpsshow() {
     }));
 }
 
+/* SEARCH */
+
+function displayVideos(data) {
+    var array = data.items
+    var calcextend = parseInt(80 * array.length)
+
+    $(".videos-list").css("height", calcextend + "px");
+    var videoData = "";
+ 
+
+    data.items.forEach((item) => {
+        videoData = `
+
+                    <div class="thumbmail"><img src='${item.snippet.thumbnails.default.url}'> 
+                    <div class="thumbmailtitle" data-item-link="https://www.youtube.com/watch?v=${item.id.videoId}">
+                       <div class="marquee">
+                   <div>${item.snippet.title}</div>
+               </div>
+           </div>
+
+                    `;
+
+        $(".videos-list").append(videoData);
+    });
+}
+
+
+
+function searchytclose() {
+    $(".fas fa-search").fadeIn(100)
+    $(".fas fa-arrow-circle-right").fadeOut(100)
+    $(".searchinput").fadeOut(500)
+    $(".searchinput").animate({
+        bottom: "179px",
+    }, 300);
+
+}
+function searchyt() {
+
+    var sarchvalue = $("#searchvalue").val()
+    var API_KEY = ""
+    var resultadomaximo = 10
+    $(".searchinput").fadeOut(100)
+    $("#searchyt").fadeOut(100)
+    $("#opensearch").fadeIn(100)
+    if (sarchvalue) {
+        $("#dots").show()
+        $("#searchvalue").on("input", function () {
+            $("#dots").show()
+        });
+
+        listmusic()
+        API_KEY = Api;
+
+        var url = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&part=snippet&q=${sarchvalue}&maxResults=${resultadomaximo}&type=video`;
+
+        $.ajax({
+            method: "GET",
+            url: url,
+            beforeSend: function () {
+            },
+            success: function (data) {
+
+                displayVideos(data);
+            },
+        });
+
+    }
+
+    else {
+
+        $("#searchyt").animate({
+            color: "#cc0505",
+        }, 10);
+        $("#searchyt").animate({
+            color: "#ffffff",
+        }, 10);
+    }
+
+}
+function clearinput() {
+
+    document.getElementById("searchvalue").value = "";
+
+}
+
+function opensearch() {
+    $("#searchyt").fadeIn(500)
+    $(".searchinput").fadeIn(500)
+    $(".searchinput").animate({
+        bottom: "179px",
+    }, 300);
+    $("#opensearch").fadeOut(100)
+    setTimeout('clearinput()', 25000);
+    setTimeout('searchytclose()', 50000);
+
+}
+
 /* SETTINGS */
 function settings() {
     $("#activity").hide()
     $("#passaport").hide()
     $("#music").hide()
     $("#gps").hide()
+    $("#listmusic").hide()
     //
     $("#settings").show()
 }
 
 const colours = [{ // Vermelho
-        width: '195px',
-        height: '303px',
-        right: '5vh',
-        bottom: '5vh',
-        backgroundimg: 'url(img/case/watch_red.png)',
-        background: 'linear-gradient(180deg, #990000 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
-    },
-    { // Verde
-        width: '195px',
-        height: '303px',
-        right: '5vh',
-        bottom: '5vh',
-        backgroundimg: 'url(img/case/watch_green.png)',
-        background: 'linear-gradient(180deg, #004C00 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
-    }, { // Azul
-        width: '195px',
-        height: '303px',
-        right: '5vh',
-        bottom: '5vh',
-        backgroundimg: 'url(img/case/watch_blue.png)',
-        background: 'linear-gradient(180deg, #000099 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
-    }, { // Branco
-        width: '195px',
-        height: '303px',
-        right: '5vh',
-        bottom: '5vh',
-        backgroundimg: 'url(img/case/watch_white.png)',
-        background: 'linear-gradient(180deg, #999999 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
-    }, { // Ouro
-        width: '195px',
-        height: '303px',
-        right: '5vh',
-        bottom: '5vh',
-        backgroundimg: 'url(img/case/watch_gold.png)',
-        background: 'linear-gradient(180deg, #998100 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
-    }, { // Cinza
-        width: '195px',
-        height: '303px',
-        right: '5vh',
-        bottom: '5vh',
-        backgroundimg: 'url(img/case/watch.png)',
-        background: 'linear-gradient(180deg, #333333 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
-    }
+    width: '195px',
+    height: '303px',
+    right: '5vh',
+    bottom: '5vh',
+    backgroundimg: 'url(img/case/watch_red.png)',
+    background: 'linear-gradient(180deg, #990000 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
+},
+{ // Verde
+    width: '195px',
+    height: '303px',
+    right: '5vh',
+    bottom: '5vh',
+    backgroundimg: 'url(img/case/watch_green.png)',
+    background: 'linear-gradient(180deg, #004C00 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
+}, { // Azul
+    width: '195px',
+    height: '303px',
+    right: '5vh',
+    bottom: '5vh',
+    backgroundimg: 'url(img/case/watch_blue.png)',
+    background: 'linear-gradient(180deg, #000099 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
+}, { // Branco
+    width: '195px',
+    height: '303px',
+    right: '5vh',
+    bottom: '5vh',
+    backgroundimg: 'url(img/case/watch_white.png)',
+    background: 'linear-gradient(180deg, #999999 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
+}, { // Ouro
+    width: '195px',
+    height: '303px',
+    right: '5vh',
+    bottom: '5vh',
+    backgroundimg: 'url(img/case/watch_gold.png)',
+    background: 'linear-gradient(180deg, #998100 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
+}, { // Cinza
+    width: '195px',
+    height: '303px',
+    right: '5vh',
+    bottom: '5vh',
+    backgroundimg: 'url(img/case/watch.png)',
+    background: 'linear-gradient(180deg, #333333 0%, rgba(49, 49, 49, 0.1) 83.33%, rgba(49, 49, 49, 0) 100%)',
+}
 
 ]
 
@@ -290,6 +437,7 @@ function nextcolor() {
 
 /* NUI */
 document.onkeyup = function (data) {
+    $("#dots").hide()
     if (data.which == 27) {
         $.post('https://GENESEEWatch/action', JSON.stringify({
             action: 'CloseNUI'

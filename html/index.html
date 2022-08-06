@@ -7,9 +7,10 @@
     <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.5.6/dist/progressbar.js"></script>
     <script src="https://kit.fontawesome.com/57e361edfe.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
+    <script src="https://apis.google.com/js/api.js"></script>
     <script src="js/watch.js"></script>
     <script src="js/moviment.js"></script>
+    <script src="js/youtube.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
 
@@ -18,10 +19,11 @@
 <body>
     <div id="watch">
         <div id="glass" style="pointer-events:none;"></div>
-
-        <button class="time" onclick="time()">
+        <div class="overlayenter" onclick="time()">
+        <div class="time">
             22<br>00
-        </button>
+        </div>
+        </div>
 
         <div id="content">
 
@@ -56,9 +58,13 @@
                 <div id="dots2" style="background: rgba(196, 196, 196);"></div>
             </div>
 
-            <div id="music">
+              <div id="music">
                 <div id="backanimated"></div>
-
+                <div class="searchinput"><input type="text"
+                placeholder="Digite nome da música" name=""  id="searchvalue" ></div>
+                <i  id="searchyt" onclick="searchyt()" class='fas fa-arrow-circle-right'></i>
+                <i  id="opensearch" onclick="opensearch()" class='fas fa-search'></i>
+        
                 <div id="title">Music</div>
                 <div class="timev2">12:00</div>
 
@@ -67,11 +73,28 @@
 
                 <div class="navplayer">
                     <div class="less" onclick="less()"><b>-</b></div>
-                    <div id="timeplay" onclick="timeplay()">0:00 / 0:00</div>
+                    <div id="timeplay">0:00 / 0:00</div>
                     <div class="plus" onclick="plus()"><b>+</b></div>
                 </div>
 
                 <div id="dots3" style="background: rgba(196, 196, 196);"></div>
+  
+            </div> 
+            
+
+            
+            <div id="listmusic">
+                <div id="backanimated"></div>
+                <div id="title">Spotify</div>
+                <div class="timev2">12:00</div>
+                <div class="backbar" onclick="music()"></div>
+                <div class="videos-listframe">
+                    <div class="videos-list">
+                       
+                </div>
+                    </div>
+                </div>
+  
             </div>
 
             <div id="gps">

@@ -13,6 +13,20 @@ Adicione as seguintes linhas no seu server.cfg
 
 Você pode configurar utilizando o arquivo config/config.lua
 
+# Update v1.1
+
+1. Feito a integração com API do youtube
+2. Vida/fome/sede e player sendo atualizado em tempo real
+3. APP de Spotify com pesquisa e indexação.
+
+
+
+------
+
+- APP Spotify
+
+![img](https://cdn.discordapp.com/attachments/987803672895434837/1005313182434349156/unknown.png)
+
 - Sistema de Hora in-game
 ![alt text](https://media.discordapp.net/attachments/864238497992671273/880261542979989504/unknown.png?width=1193&height=671)
 
