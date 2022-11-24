@@ -23,10 +23,6 @@ Você pode configurar utilizando o arquivo config/config.lua
 
 ------
 
-- APP Spotify
-
-![img](https://cdn.discordapp.com/attachments/987803672895434837/1005313182434349156/unknown.png)
-
 - Sistema de Hora in-game
 ![alt text](https://media.discordapp.net/attachments/864238497992671273/880261542979989504/unknown.png?width=1193&height=671)
 
@@ -44,4 +40,3 @@ Você pode configurar utilizando o arquivo config/config.lua
 
 - Sistema de CASE, e mover o relogio para onde quiser na tela
 ![alt text](https://media.discordapp.net/attachments/864238497992671273/880263085745668126/unknown.png?width=1193&height=671)
-"# GENESEEWatch" 
