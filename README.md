@@ -1,6 +1,6 @@
 # GENESEEWatch
 
-Script feito para substituir a HUD padrao
+Script feito para substituir a HUD padrao.
 
 Como configurar?
 Baixar, descompactar e mova GENESEEWatch para a pasta [resoucer]/
