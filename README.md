@@ -19,8 +19,6 @@ Você pode configurar utilizando o arquivo config/config.lua
 2. Vida/fome/sede e player sendo atualizado em tempo real
 3. APP de Spotify com pesquisa e indexação.
 
-
-
 ------
 
 - Sistema de Hora in-game
