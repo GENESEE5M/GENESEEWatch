@@ -11,14 +11,10 @@ files {
     'html/**/*'
 }
 
-server_script {
-    '@vrp/lib/utils.lua',
-    'config/config.lua',
-    'server/server.lua',
-}
+server_script 'server/server.lua'
+client_script 'client/client.lua'
 
-client_script {
+shared_scripts { 
     '@vrp/lib/utils.lua',
     'config/config.lua',
-    'client/client.lua',
 }
