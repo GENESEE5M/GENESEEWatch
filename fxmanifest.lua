@@ -1,5 +1,6 @@
 fx_version 'cerulean'
 game 'gta5'
+dev 'Doug'
 
 ui_page('html/index.html')
 
